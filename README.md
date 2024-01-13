@@ -53,8 +53,6 @@ If the text files already exist, Comfy will throw the Out of Range error. I coul
 
 The widget lets you write a common prefix. It’s useful for creating trigger words for your LoRA. If you use the widget, make sure it ends with a comma. Again, it’s something I could easily fix, but I'm a little lazy x).
 
-This is part of THE LAB ULTIMATE, my personal workflow. I will share it… but I’ll wait for a while because I want to include much more stuff in it before making it public.
-
 
 
 I would like to thank the creators of Inspire Pack and YMC Suite Node, as my functions are heavily inspired by theirs. In fact, I had a workflow working with them, without my custom nodes at all. My project is just a rewrite of some of their functions, as a way to train myself for making my own nodes.
