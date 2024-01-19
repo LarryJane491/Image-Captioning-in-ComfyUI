@@ -42,6 +42,13 @@ class LoRACaptionSave:
 
         namelistsplit = namelist.splitlines()
         namelistsplit = [i[:-4] for i in namelistsplit]
+        
+        
+        if prefix.endswith(","):
+            prefix += " "
+        elif not prefix.endswith(", "):
+            prefix+= ", "
+        
         file_extension = '.txt'
         filename = self.generate_filename(path, namelistsplit, file_extension)
         
