@@ -31,23 +31,25 @@ class LoRACaptionSave:
     def save_text_file(self, text, path, namelist, prefix):
 
         if not os.path.exists(path):
-            cstr(f"The path `{path}` doesn't exist! Creating it...").warning.print()
+            print(f"The path `{path}` doesn't exist! Creating it...")
             try:
                 os.makedirs(path, exist_ok=True)
             except OSError as e:
-                cstr(f"The path `{path}` could not be created! Is there write access?\n{e}").error.print()
+                print(f"The path `{path}` could not be created! Is there write access?\n{e}")
 
         if text.strip() == '':
-            cstr(f"There is no text specified to save! Text is empty.").error.print()
+            print(f"There is no text specified to save! Text is empty.")
 
         namelistsplit = namelist.splitlines()
         namelistsplit = [i[:-4] for i in namelistsplit]
         
-        
-        if prefix.endswith(","):
-            prefix += " "
-        elif not prefix.endswith(", "):
-            prefix+= ", "
+        if prefix.strip() != "":
+            if prefix.endswith(","):
+                prefix += " "
+            elif not prefix.endswith(", "):
+                prefix+= ", "
+        else:
+            prefix = ""
         
         file_extension = '.txt'
         filename = self.generate_filename(path, namelistsplit, file_extension)
@@ -61,8 +63,12 @@ class LoRACaptionSave:
         counter = 1
         filename = f"{namelistsplit[counter-1]}{extension}"
         while os.path.exists(os.path.join(path, filename)):
-            counter += 1
-            filename = f"{namelistsplit[counter-1]}{extension}"
+            try:
+                counter += 1
+                filename = f"{namelistsplit[counter-1]}{extension}"
+            except:
+                print(f"Caption file already exists!")
+                break
 
         return filename
 
@@ -72,7 +78,7 @@ class LoRACaptionSave:
                 content= prefix + content
                 f.write(content)
         except OSError:
-            cstr(f"Unable to save file `{file}`").error.print()
+            print(f"Unable to save file `{file}`")
 
 def io_file_list(dir='',pattern='*.txt'):
     res=[]
