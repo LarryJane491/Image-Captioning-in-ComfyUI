@@ -80,10 +80,10 @@ class LoRACaptionSave:
         except OSError:
             print(f"Unable to save file `{file}`")
 
-def io_file_list(dir='',pattern='*.txt'):
+def io_file_list(dir='',extensions = ['*.png','*.jpg']):
     res=[]
-    for filename in glob.glob(os.path.join(dir,pattern)):
-        res.append(filename)
+    for ext in extensions:
+        res.extend(glob.glob(os.path.join(dir, ext)))
     return res
 
 			
@@ -108,23 +108,25 @@ class LoRACaptionLoad:
 
     CATEGORY = "LJRE/LORA"
 
-    def captionload(self, path, pattern='*.png'):
-        text=io_file_list(path,pattern)
-        text=list(map(os.path.basename,text))
+    def captionload(self, path):
+        valid_extensions = ['*.png','*.jpg']
+        dir_files=io_file_list(path,valid_extensions)
+        print(dir_files)
+        text=list(map(os.path.basename,dir_files))
         text='\n'.join(text)
-		
+    
 		#image loader
         if not os.path.isdir(path):
             raise FileNotFoundError(f"path '{path} cannot be found.'")
-        dir_files = os.listdir(path)
+        #dir_files = os.listdir(path)
         if len(dir_files) == 0:
             raise FileNotFoundError(f"No files in path '{path}'.")
 
         # Filter files by extension
-        valid_extensions = ['.png']
-        dir_files = [f for f in dir_files if any(f.lower().endswith(ext) for ext in valid_extensions)]
+        
+        #dir_files = [f for f in dir_files if any(f.lower().endswith(ext) for ext in valid_extensions)]
 
-        dir_files = [os.path.join(path, x) for x in dir_files]
+        #dir_files = [os.path.join(path, x) for x in dir_files]
 
         images = []
         image_count = 0
